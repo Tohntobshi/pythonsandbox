@@ -1,0 +1,22 @@
+version: "3.7"
+
+services:
+
+  postgres:
+    image: postgres
+    volumes:
+      -  ./postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: secret
+
+  pythonapp:
+    build:
+      context: ./
+    restart: on-failure
+
+  nginx:
+    image: nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 80:80
